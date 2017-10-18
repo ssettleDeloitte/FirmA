@@ -1,0 +1,46 @@
+package FirmProjectPackage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ApplicationsDAO {
+
+	public Connection getConnection(){
+		
+		String connectionUrl = "jdbc:mysql://localhost:3306/FirmIntDb";
+		Connection connection = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connection = DriverManager.getConnection(connectionUrl, "root", "root");
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connection;
+		
+	}
+	
+	public void closeConnection(Connection connection)
+	{
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		ApplicationsDAO dao = new ApplicationsDAO();
+		Connection connection = dao.getConnection();
+	}
+
+}

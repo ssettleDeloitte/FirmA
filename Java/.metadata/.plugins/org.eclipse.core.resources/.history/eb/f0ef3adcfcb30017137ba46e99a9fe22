@@ -1,0 +1,130 @@
+package FirmProjectPackage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ApplicationsDAO {
+
+	public Connection getConnection(){
+		
+		String connectionUrl = "jdbc:mysql://localhost:3306/FirmIntDb";
+		Connection connection = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connection = DriverManager.getConnection(connectionUrl, "root", "root");
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connection;
+		
+	}
+	
+	public void closeConnection(Connection connection)
+	{
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+/*	public void create(Application application){
+		
+		String sql = "insert into appliations"
+		
+		Connection connection = getConnection();
+		closeConnection(connection);
+	}*/
+	
+	
+	
+	public void create(Environment environment)
+	{
+		String sql = "insert into environments (name, url) values(?,?)";
+				
+		Connection connection = getConnection();
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, environment.getName());
+			statement.setString(2, environment.getUrl());
+			statement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection(connection);
+		}
+			
+	}
+	
+	public List<Environment> selectAll(){
+		List<Environment> environments = new ArrayList<Environment>();
+		
+		String sql = "select * from environments";
+		
+		Connection connection = getConnection();
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet results = statement.executeQuery();
+			while(results.next())
+			{
+				int id = results.getInt("id");
+				String name = results.getString("name");
+				String url = results.getString("url");
+				Environment environment = new Environment(id, name, url);
+				environments.add(environment);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			closeConnection(connection);
+		}
+		
+		return environments;
+	}
+	
+	
+	public void remove(int id)
+	{
+		String sql = "delete from environments where id=?";
+		
+		Connection connection = getConnection();
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			closeConnection(connection);
+		}
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		ApplicationsDAO dao = new ApplicationsDAO();
+		
+		Environment en = new Environment("Google Environment", "http://www.google.com");
+		dao.create(en);
+
+	}
+
+}

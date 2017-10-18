@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="FirmProjectPackage.*, java.util.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link href="css/bootstrap.css" rel="stylesheet"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Environments</title>
+</head>
+<body>
+<br>
+<center>
+<h1>Environments</h1>
+</center>
+
+<br>
+<br>
+<%
+ApplicationsDAO dao = new ApplicationsDAO();
+
+
+//controller
+String action = request.getParameter("action");
+String name = request.getParameter("name");
+String url = request.getParameter("url");
+String id = request.getParameter("id");
+
+
+if("create".equals(action)){
+	Environment en = new Environment(name, url);
+	dao.create(en);
+}else if("remove".equals(action)){
+	int idInt = Integer.parseInt(id);
+	dao.remove(idInt);
+}
+
+
+List<Environment> environments = dao.selectAll();
+%>
+
+<form action="environment.jsp">
+
+<table class="table">
+<tr>
+<td>Name <input name="name" class="form-control"/></td>
+<td>URL <input name="url" class ="form-control"/></td>
+<td><button class="btn" name="action" value="create">Add</button></td>
+</tr>
+<%for(Environment en: environments){
+	%>
+	<tr>
+	<td><%=en.getName() %></td>
+	<td><%=en.getUrl() %></td>
+	<td>
+	<a href="environment.jsp?action=remove&id=<%=en.getId() %>">
+	Delete
+	</a>
+	</tr>
+	<% }%>
+</table>
+
+</form>
+
+</body>
+</html>
