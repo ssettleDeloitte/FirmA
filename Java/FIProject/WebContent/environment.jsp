@@ -4,6 +4,7 @@
 <html>
 <head>
 <link href="css/bootstrap.css" rel="stylesheet"/>
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Environments</title>
 </head>
@@ -11,6 +12,8 @@
 <br>
 <center>
 <h1>Environments</h1>
+<br>
+<a href="index.jsp">Go back to home</a>
 </center>
 
 <br>
@@ -19,6 +22,8 @@
 ApplicationsDAO dao = new ApplicationsDAO();
 
 
+//controller
+//controller
 //controller
 String action = request.getParameter("action");
 String name = request.getParameter("name");
@@ -41,6 +46,7 @@ if("create".equals(action)){
 	int idInt = Integer.parseInt(id);
 	env = new Environment(name, url);
 	dao.update(idInt, env);
+
 }
 
 
@@ -68,7 +74,7 @@ update
 	%>
 	<tr>
 	<td><%=en.getName() %></td>
-	<td><%=en.getUrl() %></td>
+	<td><a href="<%=en.getUrl() %>"><%=en.getUrl() %></a></td>
 	<td>
 	<a href="environment.jsp?action=remove&id=<%= en.getId() %>">
 	Delete
@@ -85,6 +91,8 @@ update
 </table>
 
 </form>
+
+
 
 </body>
 </html>

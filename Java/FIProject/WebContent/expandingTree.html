@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="treePane">
+<ul>
+<li><label class="node">Database 1</label>
+<ul>
+<li>Content 1</li>
+<li>Content 2</li>
+</ul></li>
+<li><label class="node">Database 2</label>
+<ul>
+<li>Content 3</li></ul>
+</li>
+</ul>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+(function() {
+	
+	$('#treePane').find(".node").next("ul").hide();
+	
+	$('#treePane').find('.node').on('click', function()
+			{
+		$(this).next('ul').toggle();
+			});
+	
+})();
+	
+	
+</script>
+</body>
+</html>

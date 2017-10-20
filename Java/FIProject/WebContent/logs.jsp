@@ -6,26 +6,29 @@
 <link href="css/bootstrap.css" rel="stylesheet"/>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home Page</title>
+<title>Logs</title>
 </head>
 <body>
 <br>
 <center>
-<h1>Home Page</h1>
+<h1>Logs</h1>
+<br>
+<a href="index.jsp">Go back to home</a>
 </center>
 <br>
 <br>
-<table class = "table">
+
+<table class="table">
 <tr>
-<td><a href="environment.jsp">Environments</a></td>
+<td><a href="#">Amazon Logs</a></td>
 </tr>
 <tr>
-<td>
-<a href="logs.jsp">Logs</a></td>
-</tr>
-<tr>
-<td><a href="databases.jsp">Databases</a></td>
+<td><a href="#">YouTube Logs</a>
+</td>
 </tr>
 </table>
+
+
+
 </body>
 </html>
